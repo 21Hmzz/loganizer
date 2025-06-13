@@ -1,4 +1,4 @@
-module github.com/21Hmzz/go_loganizer
+module github.com/21Hmzz/loganalyzer
 
 go 1.24.3
 
