@@ -13,6 +13,7 @@ import (
 
 var cfgPath string
 var outPath string
+var statusFilter string
 
 var analyzeCmd = &cobra.Command{
 	Use:   "analyze",
@@ -48,6 +49,7 @@ var analyzeCmd = &cobra.Command{
 func init() {
 	analyzeCmd.Flags().StringVarP(&cfgPath, "config", "c", "", "Chemin vers le JSON de config (requis)")
 	analyzeCmd.Flags().StringVarP(&outPath, "output", "o", "", "Chemin du rapport JSON")
+	analyzeCmd.Flags().StringVar(&statusFilter, "status", "", "Filtrer par statut OK ou FAILED")
 	analyzeCmd.MarkFlagRequired("config")
 	rootCmd.AddCommand(analyzeCmd)
 }
