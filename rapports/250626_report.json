@@ -1,12 +1,5 @@
 [
   {
-    "LogID": "db-server-3",
-    "FilePath": "test_logs/mysql_error.log",
-    "Status": "FAILED",
-    "Message": "Fichier introuvable",
-    "ErrorDetails": "fichier ibntrouvable : test_logs/mysql_error.log"
-  },
-  {
     "LogID": "invalid-path",
     "FilePath": "/non/existent/log.log",
     "Status": "FAILED",
@@ -14,8 +7,15 @@
     "ErrorDetails": "fichier ibntrouvable : /non/existent/log.log"
   },
   {
-    "LogID": "app-backend-2",
-    "FilePath": "test_logs/errors.log",
+    "LogID": "db-server-3",
+    "FilePath": "test_logs/mysql_error.log",
+    "Status": "FAILED",
+    "Message": "Fichier introuvable",
+    "ErrorDetails": "fichier ibntrouvable : test_logs/mysql_error.log"
+  },
+  {
+    "LogID": "empty-log",
+    "FilePath": "test_logs/empty.log",
     "Status": "OK",
     "Message": "Analyse réussie",
     "ErrorDetails": ""
@@ -23,13 +23,13 @@
   {
     "LogID": "corrupted-log",
     "FilePath": "test_logs/corrupted.log",
-    "Status": "FAILED",
-    "Message": "Erreur de parsing",
-    "ErrorDetails": "erreur de pars sur : corrupted-log"
+    "Status": "OK",
+    "Message": "Analyse réussie",
+    "ErrorDetails": ""
   },
   {
-    "LogID": "empty-log",
-    "FilePath": "test_logs/empty.log",
+    "LogID": "app-backend-2",
+    "FilePath": "test_logs/errors.log",
     "Status": "OK",
     "Message": "Analyse réussie",
     "ErrorDetails": ""

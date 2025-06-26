@@ -2,6 +2,8 @@ package cmd
 
 import (
 	"fmt"
+	"path/filepath"
+	"time"
 
 	"github.com/21Hmzz/loganalyzer/internal/analyzer"
 	"github.com/21Hmzz/loganalyzer/internal/config"
@@ -27,17 +29,25 @@ var analyzeCmd = &cobra.Command{
 				fmt.Printf("  → %s\n", r.ErrorDetails)
 			}
 		}
-	
-		if err := reporter.Write(outPath, results); err != nil {
-    return err
-}
+
+		//pour pas que ca crer un fichier meme sans --output
+		if outPath != "" {
+			date := time.Now().Format("060102")
+			dir := filepath.Dir(outPath)
+			base := filepath.Base(outPath)
+			finalPath := filepath.Join(dir, fmt.Sprintf("%s_%s", date, base))
+
+			if err := reporter.Write(finalPath, results); err != nil {
+				return err
+			}
+		}
 		return nil
 	},
 }
 
 func init() {
 	analyzeCmd.Flags().StringVarP(&cfgPath, "config", "c", "", "Chemin vers le JSON de config (requis)")
-	analyzeCmd.Flags().StringVarP(&outPath, "output", "o", "report.json", "Chemin du rapport JSON")
+	analyzeCmd.Flags().StringVarP(&outPath, "output", "o", "", "Chemin du rapport JSON")
 	analyzeCmd.MarkFlagRequired("config")
 	rootCmd.AddCommand(analyzeCmd)
 }
