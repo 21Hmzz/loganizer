@@ -24,10 +24,8 @@ func analyzeOne(e config.LogEntry) Result {
 		return Result{e.ID, e.Path, "FAILED", "C’est un répertoire", fmt.Sprintf("%s est un dossier", e.Path)}
 	}
 
-	// Pause aléatoire 50–200ms
 	time.Sleep(time.Duration(50+rand.Intn(151)) * time.Millisecond)
 
-	// 10% d’erreur simulée
 	if rand.Float64() < 0.1 {
 		return Result{e.ID, e.Path, "FAILED", "Erreur de parsing", "simulated parse error"}
 	}
