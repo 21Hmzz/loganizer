@@ -2,12 +2,14 @@ package cmd
 
 import (
 	"fmt"
+
 	"github.com/21Hmzz/loganalyzer/internal/analyzer"
 	"github.com/21Hmzz/loganalyzer/internal/config"
 	"github.com/spf13/cobra"
 )
 
 var cfgPath string
+var outPath string
 
 var analyzeCmd = &cobra.Command{
 	Use:   "analyze",
@@ -30,6 +32,7 @@ var analyzeCmd = &cobra.Command{
 
 func init() {
 	analyzeCmd.Flags().StringVarP(&cfgPath, "config", "c", "", "Chemin vers le JSON de config (requis)")
+	analyzeCmd.Flags().StringVarP(&outPath, "output", "o", "report.json", "Chemin du rapport JSON")
 	analyzeCmd.MarkFlagRequired("config")
 	rootCmd.AddCommand(analyzeCmd)
 }
