@@ -5,6 +5,7 @@ import (
 
 	"github.com/21Hmzz/loganalyzer/internal/analyzer"
 	"github.com/21Hmzz/loganalyzer/internal/config"
+	"github.com/21Hmzz/loganalyzer/internal/reporter"
 	"github.com/spf13/cobra"
 )
 
@@ -26,6 +27,10 @@ var analyzeCmd = &cobra.Command{
 				fmt.Printf("  → %s\n", r.ErrorDetails)
 			}
 		}
+	
+		if err := reporter.Write(outPath, results); err != nil {
+    return err
+}
 		return nil
 	},
 }
