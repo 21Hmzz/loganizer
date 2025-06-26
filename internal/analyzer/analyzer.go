@@ -17,7 +17,7 @@ func analyzeOne(e config.LogEntry) Result {
 	// Vérif existence
 	if info, err := os.Stat(e.Path); err != nil {
 		if os.IsNotExist(err) {
-			return Result{e.ID, e.Path, "FAILED", "Fichier introuvable", err.Error()}
+			return Result{e.ID, e.Path, "FAILED", "Fichier introuvable", (&FileNotFoundErr{e.Path}).Error()}
 		}
 		return Result{e.ID, e.Path, "FAILED", "Erreur accès fichier", err.Error()}
 	} else if info.IsDir() {
@@ -27,7 +27,8 @@ func analyzeOne(e config.LogEntry) Result {
 	time.Sleep(time.Duration(50+rand.Intn(151)) * time.Millisecond)
 
 	if rand.Float64() < 0.1 {
-		return Result{e.ID, e.Path, "FAILED", "Erreur de parsing", "simulated parse error"}
+		perr := &ParseErr{e.ID}
+		return Result{e.ID, e.Path, "FAILED", "Erreur de parsing", perr.Error()}
 	}
 
 	return Result{e.ID, e.Path, "OK", "Analyse réussie", ""}
