@@ -5,6 +5,7 @@ import (
 	"github.com/21Hmzz/loganalyzer/internal/config"
 	"math/rand"
 	"os"
+	"sync"
 	"time"
 )
 
@@ -43,7 +44,23 @@ type Result struct {
 }
 
 func Run(entries []config.LogEntry) []Result {
-	// TODO
-	return nil
+	ch := make(chan Result, len(entries))
+	var wg sync.WaitGroup
 
+	for _, e := range entries {
+		wg.Add(1)
+		go func(ent config.LogEntry) {
+			defer wg.Done()
+			ch <- analyzeOne(ent)
+		}(e)
+	}
+
+	wg.Wait()
+	close(ch)
+
+	var results []Result
+	for r := range ch {
+		results = append(results, r)
+	}
+	return results
 }
