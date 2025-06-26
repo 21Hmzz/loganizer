@@ -2,11 +2,12 @@ package analyzer
 
 import (
 	"fmt"
-	"github.com/21Hmzz/loganalyzer/internal/config"
 	"math/rand"
 	"os"
 	"sync"
 	"time"
+
+	"github.com/21Hmzz/loganalyzer/internal/config"
 )
 
 func init() {
@@ -42,7 +43,7 @@ type Result struct {
 	ErrorDetails string
 }
 
-func Run(entries []config.LogEntry) []Result {
+func Run(entries []config.LogEntry, statusFilter string) []Result {
 	ch := make(chan Result, len(entries))
 	var wg sync.WaitGroup
 
@@ -59,6 +60,9 @@ func Run(entries []config.LogEntry) []Result {
 
 	var results []Result
 	for r := range ch {
+		if statusFilter != "" && r.Status != statusFilter {
+			continue
+		}
 		results = append(results, r)
 	}
 	return results

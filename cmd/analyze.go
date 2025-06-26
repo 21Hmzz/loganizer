@@ -23,7 +23,7 @@ var analyzeCmd = &cobra.Command{
 		if err != nil {
 			return err
 		}
-		results := analyzer.Run(entries)
+		results := analyzer.Run(entries, statusFilter)
 		for _, r := range results {
 			fmt.Printf("%s | %s | %s | %s\n", r.LogID, r.FilePath, r.Status, r.Message)
 			if r.ErrorDetails != "" {
